@@ -92,6 +92,18 @@ finally {
     }
 }
 
+# Copy OSD module to offline OS PowerShell modules
+try {
+    Write-Host "Copying OSD module to offline OS..."
+    $OSModulePath = "S:\Program Files\WindowsPowerShell\Modules"
+    Copy-PSModuleToFolder -Name OSD -Destination $OSModulePath -Verbose
+    Write-Host "OSD module copied successfully to $OSModulePath"
+}
+catch {
+    Write-Error "Failed to copy OSD module: $_"
+    exit 1
+}
+
 # Set MDT driver path
 $TSEnv.Value("OSDDriverPath") = $DriverDir
 Write-Host "Driver package ready at: $LocalPath"
